@@ -7,7 +7,7 @@ const Hero = () => {
     const [haveReq, setHaveReq] = React.useState('USD')
     const [wantReq, setWantReq] = React.useState('EUR')
     const [amountHave, setAmountHave] = React.useState(100)
-    const [amountWant, setAmountWant] = React.useState(0)
+    const [amountWant, setAmountWant] = React.useState("")
     
     React.useEffect(() => {
         const options = {
@@ -29,8 +29,6 @@ const Hero = () => {
             <Dropdown.Item key={x.currency} eventKey={x.currency}>{x.currency} | {x.name}</Dropdown.Item>
         )
     )
-
-    console.log(amountWant)
     
   return (
     <div>
