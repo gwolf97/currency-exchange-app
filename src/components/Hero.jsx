@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Card, Col, Row } from 'react-bootstrap';
 import currencies from "../currencies.js"
-import {FormControl, InputLabel, Select, MenuItem} from "@mui/material"
+import {FormControl, InputLabel, Select,Input , MenuItem, TextField, InputAdornment, ListSubheader} from "@mui/material"
 import CurrencyFlag from "react-currency-flags";
 
 const Hero = () => {
@@ -11,6 +11,8 @@ const Hero = () => {
     const [amountHave, setAmountHave] = React.useState(1)
     const [amountWant, setAmountWant] = React.useState("")
     const [recentWants, setRecentWants] = React.useState([])
+    const [haveSearchText, setHaveSearchText] = React.useState("")
+    const [wantSearchText, setWantSearchText] = React.useState("")
     
     React.useEffect(() => {
         const options = {
@@ -23,16 +25,35 @@ const Hero = () => {
         
         fetch(`https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=${haveReq}&want=${wantReq}&amount=${amountHave}`, options)
             .then(response => response.json())
-            .then(response => {setAmountWant(response.new_amount) ; console.log(response)})
-            .catch(err => console.error(err));
-        
-        
-    }, [haveReq, wantReq, amountHave])
+            .then(response => {setAmountWant(response.new_amount)})
+            .catch(err => console.error(err))
 
+            setRecentWants(prev =>[wantReq, ...prev].filter((val,id,array) =>  array.indexOf(val) == id))
+            
+            recentWants.length > 3 && setRecentWants(prev => [...prev].slice(0,4))
 
-    const getCurrenciesMui = currencies.map(
+    }, [haveReq, wantReq, amountHave, recentWants.length])
+
+    const containsText = (text, searchText) =>
+    text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
+
+    const getHaveCurrenciesMui = currencies.filter(x => containsText(x.currency, haveSearchText)).map(
         x => (
             <MenuItem key={x.currency} value={x.currency}><span className="currency">{x.currency}</span><span className="name">{x.name}</span> </MenuItem>
+        )
+    )
+
+    const getWantCurrenciesMui = currencies.filter(x => containsText(x.currency, wantSearchText)).map(
+        x => (
+            <MenuItem key={x.currency} value={x.currency}><span className="currency">{x.currency}</span><span className="name">{x.name}</span> </MenuItem>
+        )
+    )
+
+    const getRecentWants = currencies.filter(cur => recentWants.find(x => x === cur.currency)).reverse()
+
+    const recentWantsMui = getRecentWants.map(
+        x => (
+            <MenuItem key={`${x.currency} ${x.currency.length}`} value={x.currency}><span className="currency">{x.currency}</span><span className="name">{x.name}</span> </MenuItem>
         )
     )
     
@@ -50,7 +71,7 @@ const Hero = () => {
                     value={haveReq}
                     onChange={(e) => setHaveReq(e.target.value)}
                 >
-                    {getCurrenciesMui}
+                    {getHaveCurrenciesMui}
                 </Select>
             </FormControl>
     <input className="form-control my-3 form-control-lg" type="text" onChange={(e) =>  setAmountHave(e.target.value ? e.target.value : 1)} placeholder={1}/>
@@ -62,16 +83,31 @@ const Hero = () => {
         <FormControl fullWidth>
             <InputLabel id="want"><CurrencyFlag currency={wantReq} size="lg"/></InputLabel>
             <Select
+                MenuProps={{ autoFocus: false }}
                 labelId="want"
                 id="want"
                 label="want"
                 value={wantReq}
-                onChange={(e) => setWantReq(e.target.value)}
+                onChange={(e) => {setWantReq(e.target.value)}}
+                onClose={() => setWantSearchText("")}
             >
                 <MenuItem disabled={true} divider={true}>Recent</MenuItem>   
-
-                <MenuItem disabled={true} divider={true}></MenuItem>   
-                {getCurrenciesMui}
+                {recentWantsMui}
+                <MenuItem>
+            <Input
+              size="small"
+              autoFocus
+              placeholder="Type to search..."
+              fullWidth
+              onChange={(e) => setWantSearchText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key !== "Escape") {
+                  e.stopPropagation();
+                }
+              }}
+            />
+                </MenuItem>
+                {getWantCurrenciesMui}
             </Select>
         </FormControl>
     <input className="form-control my-3 form-control-lg" type="text" onChange={() =>{}} value={amountWant}/>
