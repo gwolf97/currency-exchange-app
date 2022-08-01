@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap';
 import currencies from "../currencies.js"
 import {FormControl, InputLabel, Select,Input , MenuItem, Divider} from "@mui/material"
@@ -29,8 +29,8 @@ const Hero = () => {
             .then(response => {setAmountWant(response.new_amount)})
             .catch(err => console.error(err))
 
-            setRecentWants(prev =>[wantReq, ...prev].filter((val,id,array) =>  array.indexOf(val) == id))
-            setRecentHaves(prev =>[haveReq, ...prev].filter((val,id,array) =>  array.indexOf(val) == id))
+            setRecentWants(prev =>[wantReq, ...prev].filter((val,id,array) =>  array.indexOf(val) === id))
+            setRecentHaves(prev =>[haveReq, ...prev].filter((val,id,array) =>  array.indexOf(val) === id))
             
             recentWants.length > 3 && setRecentWants(prev => [...prev].slice(0,4))
             recentHaves.length > 3 && setRecentHaves(prev => [...prev].slice(0,4))
