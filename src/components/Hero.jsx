@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Card, Col, Row } from 'react-bootstrap';
 import currencies from "../currencies.js"
-import {FormControl, InputLabel, Select,Input , MenuItem, TextField, InputAdornment, ListSubheader} from "@mui/material"
+import {FormControl, InputLabel, Select,Input , MenuItem, Divider} from "@mui/material"
 import CurrencyFlag from "react-currency-flags";
 
 const Hero = () => {
@@ -11,6 +11,7 @@ const Hero = () => {
     const [amountHave, setAmountHave] = React.useState(1)
     const [amountWant, setAmountWant] = React.useState("")
     const [recentWants, setRecentWants] = React.useState([])
+    const [recentHaves, setRecentHaves] = React.useState([])
     const [haveSearchText, setHaveSearchText] = React.useState("")
     const [wantSearchText, setWantSearchText] = React.useState("")
     
@@ -29,10 +30,12 @@ const Hero = () => {
             .catch(err => console.error(err))
 
             setRecentWants(prev =>[wantReq, ...prev].filter((val,id,array) =>  array.indexOf(val) == id))
+            setRecentHaves(prev =>[haveReq, ...prev].filter((val,id,array) =>  array.indexOf(val) == id))
             
             recentWants.length > 3 && setRecentWants(prev => [...prev].slice(0,4))
+            recentHaves.length > 3 && setRecentHaves(prev => [...prev].slice(0,4))
 
-    }, [haveReq, wantReq, amountHave, recentWants.length])
+    }, [haveReq, wantReq, amountHave, recentWants.length, recentHaves.length])
 
     const containsText = (text, searchText) =>
     text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
@@ -49,7 +52,14 @@ const Hero = () => {
         )
     )
 
+    const getRecentHaves = currencies.filter(cur => recentHaves.find(x => x === cur.currency)).reverse()
     const getRecentWants = currencies.filter(cur => recentWants.find(x => x === cur.currency)).reverse()
+
+    const recentHavesMui = getRecentHaves.map(
+        x => (
+            <MenuItem key={`${x.currency} ${x.currency.length}`} value={x.currency}><span className="currency">{x.currency}</span><span className="name">{x.name}</span> </MenuItem>
+        )
+    )
 
     const recentWantsMui = getRecentWants.map(
         x => (
@@ -65,12 +75,31 @@ const Hero = () => {
              <FormControl fullWidth>
                 <InputLabel id="have">{<CurrencyFlag currency={haveReq} size="lg"/>}</InputLabel>
                 <Select
+                    MenuProps={{autoFocus: false}}
                     labelId="have"
                     id="have"
                     label="have"
                     value={haveReq}
                     onChange={(e) => setHaveReq(e.target.value)}
+                    onClose={() => setHaveSearchText("")}
                 >
+                <MenuItem disabled={true} divider={true}>Recent</MenuItem>   
+                    {recentHavesMui}
+                <Divider/>
+                <MenuItem>
+                    <Input
+                    size="small"
+                    autoFocus
+                    placeholder="Type to search..."
+                    fullWidth
+                    onChange={(e) => setHaveSearchText(e.target.value)}
+                    onKeyDown={(e) => {
+                        if (e.key !== "Escape") {
+                        e.stopPropagation();
+                        }
+                    }}
+                    />
+                </MenuItem>
                     {getHaveCurrenciesMui}
                 </Select>
             </FormControl>
@@ -92,7 +121,8 @@ const Hero = () => {
                 onClose={() => setWantSearchText("")}
             >
                 <MenuItem disabled={true} divider={true}>Recent</MenuItem>   
-                {recentWantsMui}
+                    {recentWantsMui}
+                <Divider/>
                 <MenuItem>
             <Input
               size="small"
