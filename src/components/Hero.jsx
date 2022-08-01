@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap';
 import currencies from "../currencies.js"
-import {FormControl, InputLabel, Select,Input , MenuItem, Divider} from "@mui/material"
+import {FormControl, InputLabel, Select,Input , MenuItem, Divider, Button} from "@mui/material"
 import CurrencyFlag from "react-currency-flags";
 
 const Hero = () => {
@@ -83,9 +83,6 @@ const Hero = () => {
                     onChange={(e) => setHaveReq(e.target.value)}
                     onClose={() => setHaveSearchText("")}
                 >
-                <MenuItem disabled={true} divider={true}>Recent</MenuItem>   
-                    {recentHavesMui}
-                <Divider/>
                 <MenuItem>
                     <Input
                     size="small"
@@ -100,10 +97,24 @@ const Hero = () => {
                     }}
                     />
                 </MenuItem>
+                <MenuItem disabled={true} divider={true}>Recent</MenuItem>   
+                    {recentHavesMui}
+                <Divider/>
+                <MenuItem disabled={true} divider={true}>All</MenuItem>   
                     {getHaveCurrenciesMui}
                 </Select>
             </FormControl>
-    <input className="form-control my-3 form-control-lg" type="text" onChange={(e) =>  setAmountHave(e.target.value ? e.target.value : 1)} placeholder={1}/>
+            <Row>
+                {recentHaves.map(x => (
+                    <Col key={`${x} recenthave`} xs={3}>
+                        <Button 
+                        size="small"
+                        sx={{color:"black", borderRadius:"40%",marginBottom:"-10px", marginTop:"8px", cursor:"pointer"}} 
+                        onClick={() => setHaveReq(x)}>{x}</Button>
+                    </Col>
+                ))}
+            </Row>
+        <input className="form-control my-3 form-control-lg" type="text" onChange={(e) =>  setAmountHave(e.target.value ? e.target.value : 1)} placeholder={1}/>
         </Col>
         <Col className="d-flex justify-content-center align-items-center" xs={12} sm={2}>
         <i onClick={() => {setHaveReq(wantReq) ; setWantReq(haveReq)}} className="fa-solid fa-repeat" style={{fontSize:"30px", margin:"0 10px 20px 10px", cursor:"pointer"}}></i>
@@ -120,9 +131,6 @@ const Hero = () => {
                 onChange={(e) => {setWantReq(e.target.value)}}
                 onClose={() => setWantSearchText("")}
             >
-                <MenuItem disabled={true} divider={true}>Recent</MenuItem>   
-                    {recentWantsMui}
-                <Divider/>
                 <MenuItem>
             <Input
               size="small"
@@ -137,9 +145,23 @@ const Hero = () => {
               }}
             />
                 </MenuItem>
+                <MenuItem disabled={true} divider={true}>Recent</MenuItem>   
+                    {recentWantsMui}
+                <Divider/>
+                <MenuItem disabled={true} divider={true}>All</MenuItem>   
                 {getWantCurrenciesMui}
             </Select>
         </FormControl>
+        <Row>
+                {recentWants.map(x => (
+                    <Col key={`${x} recentwant`} xs={3}>
+                        <Button 
+                        size="small"
+                        sx={{color:"black", borderRadius:"40%",marginBottom:"-10px", marginTop:"8px", cursor:"pointer"}} 
+                        onClick={() => setWantReq(x)}>{x}</Button>
+                    </Col>
+                ))}
+        </Row>
     <input className="form-control my-3 form-control-lg" type="text" onChange={() =>{}} value={amountWant}/>
         </Col>
          </Row>
