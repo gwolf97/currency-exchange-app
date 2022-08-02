@@ -3,8 +3,9 @@ import { Card, Col, Row } from 'react-bootstrap';
 import currencies from "../currencies.js"
 import {FormControl, InputLabel, Select,Input , MenuItem, Divider, Button} from "@mui/material"
 import CurrencyFlag from "react-currency-flags";
+import QuickRates from './QuickRates.jsx';
 
-const Hero = () => {
+const HomePage = () => {
 
     const [haveReq, setHaveReq] = React.useState('USD')
     const [wantReq, setWantReq] = React.useState('EUR')
@@ -68,8 +69,8 @@ const Hero = () => {
     )
     
   return (
-    <div>
-        <Card className="d-flex pt-3 px-5 justify-content-center align-items-center">
+    <div style={{overflowX:"hidden"}} className='d-flex flex-column justify-content-center align-items-center'>
+        <Card style={{width:"100vw"}} className="d-flex mb-5 py-5 px-5 justify-content-center align-items-center">
         <Row>
             <Col xs={12} sm={5}>
              <FormControl fullWidth>
@@ -166,8 +167,13 @@ const Hero = () => {
         </Col>
          </Row>
         </Card>
+        <Row>
+            <QuickRates want={wantReq} have={haveReq}/>
+            <QuickRates want={haveReq} have={wantReq}/>
+        </Row>
+    
     </div>
   )
 }
 
-export default Hero
+export default HomePage
