@@ -1,6 +1,8 @@
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap';
 import currencies from '../currencies';
+import CurrencyFlag from "react-currency-flags";
+import { Divider, MenuItem } from '@mui/material';
 
 const QuickRates = ({have, want}) => {  
 
@@ -35,23 +37,24 @@ const QuickRates = ({have, want}) => {
 
   return (
     <Col xs={12} md={6} className="mb-4">
-        <Card style={{ minWidth:"25rem", maxWidth:"40%", margin:"auto"}} className="d-flex py-3 px-4 flex-column align-items-start justify-content-start" >
-            <Card.Title>
+        <Card style={{ minWidth:"22rem", maxWidth:"50%", margin:"auto"}} className="d-flex py-3 px-4 flex-column align-items-start justify-content-start" >
+            <Card.Title style={{fontFamily:"sans-serif", fontWeight:"700"}} className="font-weight-bold my-3">
                 Convert {haveName} into {wantName}
             </Card.Title>
-            <Row>
-                <Col sx={6}>
-                    <p>{have}</p>
+            <Row  className="d-flex flex-row align-items-center w-100 mb-3 justify-content-center">
+                <Col className="d-flex align-items-start" sx={6}>
+               <p style={{fontSize:"20px", fontWeight:"600"}}> {<CurrencyFlag currency={have} size="md"/>} {have}</p>
                 </Col>
-                <Col sx={6}>
-                    <p>{want}</p>            
+                <Col className="d-flex flex-column align-items-start" sx={6}>
+                    <p style={{fontSize:"20px", fontWeight:"600"}}> {<CurrencyFlag currency={want} size="md"/>} {want}</p>            
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    {quickRatesArr.map(x => <p key={`${x} quick`}>{x}</p>)}
+            <Card style={{ minWidth:"22rem", maxWidth:"50%", margin:"-15px 0 20px -25px"}} ></Card>
+            <Row className=" d-flex flex-row align-items-center w-100 justify-content-center">
+                <Col className="d-flex flex-column align-items-start" sx={6}>
+                    {quickRatesArr.map(x => <p key={`${x} quick`}>{x} {have} <i className="fa-solid fa-angles-right"></i></p>)}
                 </Col>
-                <Col>
+                <Col className="d-flex flex-column align-items-start" sx={6}>
                     {rates.sort((a, b) => Number(a) - Number(b)).map(x => <p key={x}>{x}</p>)}
                 </Col>
             </Row>

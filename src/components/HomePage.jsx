@@ -56,13 +56,13 @@ const HomePage = () => {
     const getRecentHaves = currencies.filter(cur => recentHaves.find(x => x === cur.currency)).reverse()
     const getRecentWants = currencies.filter(cur => recentWants.find(x => x === cur.currency)).reverse()
 
-    const recentHavesMui = getRecentHaves.map(
+    const recentHavesMui = getRecentHaves.filter(x => containsText(x.currency, wantSearchText)).map(
         x => (
             <MenuItem key={`${x.currency} ${x.currency.length}`} value={x.currency}><span className="currency">{x.currency}</span><span className="name">{x.name}</span> </MenuItem>
         )
     )
 
-    const recentWantsMui = getRecentWants.map(
+    const recentWantsMui = getRecentWants.filter(x => containsText(x.currency, wantSearchText)).map(
         x => (
             <MenuItem key={`${x.currency} ${x.currency.length}`} value={x.currency}><span className="currency">{x.currency}</span><span className="name">{x.name}</span> </MenuItem>
         )
@@ -163,7 +163,7 @@ const HomePage = () => {
                     </Col>
                 ))}
         </Row>
-    <input className="form-control my-3 form-control-lg" type="text" onChange={() =>{}} value={amountWant}/>
+         <input className="form-control my-3 form-control-lg" type="text" onChange={() =>{}} value={amountWant}/>
         </Col>
          </Row>
         </Card>
