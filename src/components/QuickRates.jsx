@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap';
 import currencies from '../currencies';
 import CurrencyFlag from "react-currency-flags";
-import { Divider, MenuItem } from '@mui/material';
+import {nanoid} from "nanoid"
 
 const QuickRates = ({have, want}) => {  
 
@@ -28,7 +28,7 @@ const QuickRates = ({have, want}) => {
     quickRatesArr.map( x => {
                 fetch(`https://currency-converter-by-api-ninjas.p.rapidapi.com/v1/convertcurrency?have=${have}&want=${want}&amount=${x}`, options)
         .then(response => response.json())
-        .then(response => {setRates(prev => [response.new_amount, ...prev].filter((val,id,array) =>  array.indexOf(val) === id))})
+        .then(response => {setRates(prev => [response.new_amount, ...prev])})
         .catch(err => console.error(err))
     })
 
@@ -55,7 +55,7 @@ const QuickRates = ({have, want}) => {
                     {quickRatesArr.map(x => <p key={`${x} quick`}>{x} {have} <i className="fa-solid fa-angles-right"></i></p>)}
                 </Col>
                 <Col className="d-flex flex-column align-items-start" sx={6}>
-                    {rates.sort((a, b) => Number(a) - Number(b)).map(x => <p key={x}>{x}</p>)}
+                    {rates.sort((a, b) => Number(a) - Number(b)).map(x => <p key={nanoid()}>{x}</p>)}
                 </Col>
             </Row>
         </Card>

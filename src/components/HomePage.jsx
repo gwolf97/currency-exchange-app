@@ -41,7 +41,7 @@ const HomePage = () => {
     const containsText = (text, searchText) =>
     text.toLowerCase().indexOf(searchText.toLowerCase()) > -1;
 
-    const getHaveCurrenciesMui = currencies.filter(x => containsText(x.currency, haveSearchText)).map(
+    const getHaveCurrenciesMui = currencies.filter(x => containsText(x.currency, haveSearchText) || containsText(x.name, haveSearchText)).map(
         x => (
             <MenuItem key={x.currency} value={x.currency}><span className="currency">{x.currency}</span><span className="name">{x.name}</span> </MenuItem>
         )
