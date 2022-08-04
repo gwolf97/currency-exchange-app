@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
 
 body {
   margin: 0;
@@ -25,4 +25,9 @@ code {
   margin-left: 10px;
 }
 
+.navbar{
+  background-color: white;
+  box-shadow: 0 2px 20px 0 rgba(0,0,0,.2);
+  margin-bottom: 20px;
+}
 

@@ -52,10 +52,10 @@ const QuickRates = ({have, want}) => {
             <Card style={{ minWidth:"22rem", maxWidth:"50%", margin:"-15px 0 20px -25px"}} ></Card>
             <Row className=" d-flex flex-row align-items-center w-100 justify-content-center">
                 <Col className="d-flex flex-column align-items-start" sx={6}>
-                    {quickRatesArr.map(x => <p key={`${x} quick`}>{x} {have} <i className="fa-solid fa-angles-right"></i></p>)}
+                    {quickRatesArr.map(x => <p style={{color:"hsl(210, 100%, 30%)", fontWeight:"500"}} key={`${x} quick`}>{x} {have} <i className="fa-solid fa-angles-right"></i></p>)}
                 </Col>
                 <Col className="d-flex flex-column align-items-start" sx={6}>
-                    {rates.sort((a, b) => Number(a) - Number(b)).map(x => <p key={nanoid()}>{x}</p>)}
+                    {rates.sort((a, b) => Number(a) - Number(b)).map(x => <p style={{fontFamily:"arial", fontWeight:"500"}} key={nanoid()}>{x}</p>)}
                 </Col>
             </Row>
         </Card>

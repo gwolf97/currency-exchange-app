@@ -4,14 +4,11 @@ import {Navbar, Container } from "react-bootstrap"
 const Header = () => {
   return (
     <>
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bsPrefix="navbar" expand="lg">
     <Container className="d-flex">
-      <Navbar.Brand href="#home">
-        <h1
-          width="30"
-          height="30"
-          className="d-inline-block align-top mx-3"
-        >X-<span>CHANGE</span></h1>
+      <Navbar.Brand className="d-flex" href="#home">
+        <img style={{height:"35px", width:"35px", border:"1px solid white"}} src="./images/logo.png" alt="" />
+        <h1 style={{margin:"0px 0 0 10px", fontFamily:"Lato, sans-serif"}}>X-CHANGE</h1>
       </Navbar.Brand>
     </Container>
   </Navbar>

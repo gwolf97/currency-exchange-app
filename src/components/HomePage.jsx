@@ -70,7 +70,7 @@ const HomePage = () => {
     
   return (
     <div style={{overflowX:"hidden"}} className='d-flex flex-column justify-content-center align-items-center'>
-        <Card style={{width:"100vw"}} className="d-flex mb-5 py-5 px-5 justify-content-center align-items-center">
+        <Card style={{width:"100vw", borderTop: "0px solid white"}} className="d-flex mb-5 py-5 px-5 justify-content-center align-items-center">
         <Row>
             <Col xs={12} sm={5}>
              <FormControl fullWidth>
@@ -115,10 +115,10 @@ const HomePage = () => {
                     </Col>
                 ))}
             </Row>
-        <input className="form-control my-3 form-control-lg" type="text" onChange={(e) =>  setAmountHave(e.target.value ? e.target.value : 1)} placeholder={1}/>
+        <input style={{backgroundColor:"hsl(0, 0%, 90%)"}} className="form-control my-3 form-control-lg" type="text" onChange={(e) =>  setAmountHave(e.target.value ? e.target.value : 1)} placeholder={1}/>
         </Col>
         <Col className="d-flex justify-content-center align-items-center" xs={12} sm={2}>
-        <i onClick={() => {setHaveReq(wantReq) ; setWantReq(haveReq)}} className="fa-solid fa-repeat" style={{fontSize:"30px", margin:"0 10px 20px 10px", cursor:"pointer"}}></i>
+        <i onClick={() => {setHaveReq(wantReq) ; setWantReq(haveReq)}} className="fa-solid fa-repeat" style={{fontSize:"30px", margin:"0 10px 20px 10px", cursor:"pointer", color:"hsl(210, 100%, 30%)"}}></i>
         </Col>
         <Col xs={12} sm={5}>
         <FormControl fullWidth>
@@ -163,7 +163,7 @@ const HomePage = () => {
                     </Col>
                 ))}
         </Row>
-         <input className="form-control my-3 form-control-lg" type="text" onChange={() =>{}} value={amountWant}/>
+         <input style={{backgroundColor:"hsl(0, 0%, 90%)"}} className="form-control my-3 form-control-lg" type="text" onChange={() =>{}} value={amountWant}/>
         </Col>
          </Row>
         </Card>
